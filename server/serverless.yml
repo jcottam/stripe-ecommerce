@@ -1,0 +1,20 @@
+service: stripe-ecommerce-serverless
+app: stripe-ecommerce-serverless
+org: jcottam
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: hello
+          method: get
+          cors: true

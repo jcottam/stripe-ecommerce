@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Bike Stanley Park",
+    "description": "Vancouver, Canada",
+    "image": "images/beanie.jpg",
+    "price": 19995
+  },
+  {
+    "name": "Street Art Tour",
+    "description": "Asheville, North Carolina",
+    "image": "images/IMG_0307.jpg",
+    "price": 4595
+  },
+  {
+    "name": "Elephant Ride",
+    "description": "Destin, Florida",
+    "image": "images/IMG_6085.jpg",
+    "price": 1500
+  },
+  {
+    "name": "Snowshoeing",
+    "description": "Vail, Colorado",
+    "image": "images/IMG_4521.jpg",
+    "price": 7500
+  },
+  {
+    "name": "Bird Watching",
+    "description": "Atlanta, Georgia",
+    "image": "images/IMG_9280.jpg",
+    "price": 500
+  },
+  {
+    "name": "Sunrise Hike",
+    "description": "Bar Harbor, Maine",
+    "image": "images/IMG_0837.jpg",
+    "price": 1200
+  },
+  {
+    "name": "Fine Dining",
+    "description": "Telluride, Colorado",
+    "image": "images/fine-dining.jpg",
+    "price": 25000
+  },
+  {
+    "name": "Rock Climbing",
+    "description": "Acadia National Park, Maine",
+    "image": "images/rock-climbing.jpg",
+    "price": 5500
+  }
+]
