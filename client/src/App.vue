@@ -43,7 +43,7 @@ export default {
         el.classList.add("active");
         setTimeout(() => {
           el.classList.remove("active");
-        }, 1000);
+        }, 200);
       }
     }
   }
@@ -135,7 +135,7 @@ header {
       top: -9px;
       left: -28px;
       &.active {
-        animation: pulse 1s 1;
+        animation: pulse 0.5s 1;
       }
     }
   }

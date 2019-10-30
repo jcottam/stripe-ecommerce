@@ -1,8 +1,6 @@
 <template>
   <div class="items">
-    <div v-for="(item,index) in items" :key="index">
-      <Item v-bind="item" />
-    </div>
+    <Item v-for="(item,index) in items" v-bind="item" :key="index" />
   </div>
 </template>
 
