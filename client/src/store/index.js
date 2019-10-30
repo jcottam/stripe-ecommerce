@@ -10,6 +10,9 @@ export default new Vuex.Store({
   mutations: {
     addToCart(state, item) {
       state.cart.push(item);
+    },
+    removeFromCart(state, name) {
+      state.cart = state.cart.filter(item => item.name !== name);
     }
   },
   actions: {},

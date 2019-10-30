@@ -3,14 +3,17 @@
     <h1>Shopping Cart</h1>
     <p v-if="!cart.length">
       <router-link to="/">
-        Please go
+        EMPTY CART - please go
         shopping!
       </router-link>
     </p>
 
     <div v-else class="cart-details">
       <div class="item" v-for="(item,index) in Object.keys(itemizedCart)" :key="`item-${index}`">
-        <b>({{itemizedCart[item].length}}) {{ item }}</b>
+        <b>
+          <font-awesome-icon icon="times" @click="remove(item)" />
+          ({{itemizedCart[item].length}}) {{ item }}
+        </b>
         <span class="item-price">{{formatDollar(itemizedCart[item][0].price)}}</span>
         <span class="extended-price">{{formatDollar(itemTotal(item))}}</span>
       </div>
@@ -31,6 +34,9 @@ import { mapState, mapGetters } from "vuex";
 
 export default {
   methods: {
+    checkout() {
+      alert("integrate Stripe here");
+    },
     itemTotal(item) {
       if (!this.itemizedCart[item]) return 0;
       return this.itemizedCart[item][0].price * this.itemizedCart[item].length;
@@ -38,8 +44,8 @@ export default {
     formatDollar(amount) {
       return "$" + (amount / 100).toFixed(2);
     },
-    checkout() {
-      alert("integrate Stripe here");
+    remove(item) {
+      this.$store.commit("removeFromCart", item);
     }
   },
   computed: {
@@ -52,14 +58,16 @@ export default {
 <style lang="scss">
 .cart {
   .item {
-    padding-left: 20px;
     margin-left: 20px;
-    border-left: 1px solid #888;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
     b {
+      svg {
+        margin-right: 10px;
+        cursor: pointer;
+      }
       width: 40%;
     }
     .item-price,
