@@ -1,6 +1,9 @@
 <template>
   <div class="items">
     <Item v-for="(item,index) in items" v-bind="item" :key="index" />
+    <router-link to="/cart" class="checkout">
+      <button>Checkout</button>
+    </router-link>
   </div>
 </template>
 
@@ -23,5 +26,16 @@ export default {
 <style lang="scss">
 .items {
   margin-top: 36px;
+
+  a.checkout {
+    text-decoration: none;
+    button {
+      margin: 0 auto;
+      display: block;
+      padding: 20px;
+      font-size: 1.1em;
+      width: 100%;
+    }
+  }
 }
 </style>

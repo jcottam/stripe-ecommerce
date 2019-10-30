@@ -12,6 +12,7 @@
         </router-link>
       </div>
     </header>
+
     <main class="container">
       <transition name="slide">
         <keep-alive>
@@ -19,6 +20,7 @@
         </keep-alive>
       </transition>
     </main>
+
     <footer class="stipe-callout">
       Powered by
       <font-awesome-icon class="stripe-icon" :icon="['fab', 'stripe']" />
@@ -37,9 +39,15 @@ export default {
   },
   watch: {
     cart() {
+      // pulsate item count in shopping cart
       const el = document.querySelector(".cart-count");
-      if (el) {
-        if (el.classList.contains("active")) el.classList.remove("active");
+      if (!el) return;
+      if (el.classList.contains("active")) {
+        el.classList.remove("active");
+        setTimeout(() => {
+          el.classList.add("active");
+        }, 200);
+      } else {
         el.classList.add("active");
         setTimeout(() => {
           el.classList.remove("active");
@@ -51,19 +59,6 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin: 0;
-  padding: 0;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 .slide-enter-active {
   transition: opacity 1s, transform 1s;
 }
@@ -154,14 +149,8 @@ header {
   }
 }
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 10px;
-}
-
 main.container {
-  padding-top: 50px;
+  padding-top: 63px;
   padding-bottom: 50px;
 }
 

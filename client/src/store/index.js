@@ -1,11 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    cart: []
+    cart: [],
+    processingPayment: false,
+    chargeResult: {}
   },
   mutations: {
     addToCart(state, item) {
@@ -13,9 +16,40 @@ export default new Vuex.Store({
     },
     removeFromCart(state, name) {
       state.cart = state.cart.filter(item => item.name !== name);
+    },
+    processingPayment(state, value) {
+      state.processingPayment = value;
+    },
+    chargeResult(state, value) {
+      state.chargeResult = value;
+    },
+    cart(state, value) {
+      state.cart = value;
     }
   },
-  actions: {},
+  actions: {
+    async postPaymentToStripe({ commit }, payload) {
+      commit("processingPayment", true);
+      try {
+        const chargeResult = await axios.post(
+          `${process.env.VUE_APP_SERVERLESS_ENDPOINT}/stripe/post-payment`,
+          payload,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.VUE_APP_SERVERLESS_TOKEN}`
+            }
+          }
+        );
+        commit("processingPayment", false);
+        commit("chargeResult", chargeResult.data);
+        // empty cart
+        // commit("cart", []);
+      } catch (error) {
+        console.error(error);
+        // commit error
+      }
+    }
+  },
   getters: {
     cartTotal(state) {
       if (!state.cart.length) return 0;

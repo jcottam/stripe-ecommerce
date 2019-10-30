@@ -6,6 +6,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faShoppingCart, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { faStripe } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import "@/assets/style.scss";
 
 library.add(faStripe, faShoppingCart, faTimes);
 Vue.component("font-awesome-icon", FontAwesomeIcon);

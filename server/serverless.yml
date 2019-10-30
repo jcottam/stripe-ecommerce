@@ -11,10 +11,10 @@ plugins:
   - serverless-offline
 
 functions:
-  hello:
-    handler: handler.hello
+  stripePostPayment:
+    handler: stripe.postPayment
     events:
       - http:
-          path: hello
-          method: get
+          path: stripe/post-payment
+          method: post
           cors: true

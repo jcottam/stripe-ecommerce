@@ -1,14 +1,11 @@
 <template>
   <div class="cart">
     <h1>Shopping Cart</h1>
-    <p v-if="!cart.length">
-      <router-link to="/">
-        EMPTY CART - please go
-        shopping!
-      </router-link>
+    <p v-show="!cart.length">
+      <router-link to="/">Empty - please go shopping!</router-link>
     </p>
 
-    <div v-else class="cart-details">
+    <div v-show="cart.length" class="cart-details">
       <div class="item" v-for="(item,index) in Object.keys(itemizedCart)" :key="`item-${index}`">
         <b>
           <font-awesome-icon icon="times" @click="remove(item)" />
@@ -20,21 +17,23 @@
 
       <h3 class="total" v-if="cart.length">Total: {{formatDollar(cartTotal)}}</h3>
 
-      <div class="action-options">
-        <button class="keep-shopping" @click="$router.push({ path: '/' })">Keep Shopping</button>
+      <div v-show="!showStripe" class="action-options">
+        <button class="accent keep-shopping" @click="$router.push({ path: '/' })">Keep Shopping</button>
         <button @click="checkout">Checkout</button>
       </div>
 
-      <form ref="stripe" action="/charge" method="post" id="payment-form" class="payment-form">
+      <form v-show="showStripe" class="payment-form animated fadeInUp" @submit="submitToStripe">
         <div class="form-row">
           <label for="card-element">Credit or debit card</label>
           <div id="card-element">
-            <!-- A Stripe Element will be inserted here. -->
+            <!-- Stripe Element will be inserted here. -->
           </div>
-          <!-- Used to display form errors. -->
-          <div id="card-errors" role="alert"></div>
+          <div id="card-errors" role="alert">{{errorMessage}}</div>
         </div>
-        <button>Submit Payment</button>
+        <div class="action-options">
+          <button type="button" class="accent" @click="cancelCheckout">Cancel</button>
+          <button type="submit">Submit Payment</button>
+        </div>
         <div class="test-cc">
           4242 4242 4242 4242
           <br />
@@ -42,7 +41,6 @@
         </div>
       </form>
     </div>
-    <!-- end v-else (above <div> is only visible if products are in cart) -->
   </div>
 </template>
 
@@ -51,18 +49,26 @@
 import { mapState, mapGetters } from "vuex";
 
 export default {
-  activated() {
-    const { stripe } = this.$refs || null;
-    if (stripe && !this.stripeInitialized) this.initializeStripe();
-  },
   data() {
     return {
-      stripeInitialized: false
+      showStripe: false,
+      stripe: null,
+      card: null,
+      errorMessage: ""
     };
+  },
+  mounted() {
+    this.initializeStripe();
+  },
+  activated() {
+    this.showStripe = false;
   },
   methods: {
     checkout() {
-      alert("integrate Stripe here");
+      this.showStripe = true;
+    },
+    cancelCheckout() {
+      this.showStripe = false;
     },
     itemTotal(item) {
       if (!this.itemizedCart[item]) return 0;
@@ -74,18 +80,35 @@ export default {
     remove(item) {
       this.$store.commit("removeFromCart", item);
     },
+    async submitToStripe(evt) {
+      evt.preventDefault();
+      const result = await this.stripe.createToken(this.card);
+      if (result.error) {
+        const errorElement = document.getElementById("card-errors");
+        errorElement.textContent = result.error.message;
+      } else {
+        this.$router.push({ path: "/confirmation" });
+        this.$store.dispatch("postPaymentToStripe", {
+          source: result.token.id,
+          amount: this.cartTotal,
+          description: "Adventure with Beanie",
+          currency: "usd"
+        });
+      }
+    },
     initializeStripe() {
       console.log("%c-- initialize Stripe", "color:blue;");
       // Create a Stripe client.
       // eslint-disable-next-line
-      var stripe = Stripe("pk_test_jcyYnl0ieNzLecyFmwlk1GhQ00Ddnalzip");
+      this.stripe = Stripe(process.env.VUE_APP_STRIPE_API_KEY);
 
       // Create an instance of Elements.
-      var elements = stripe.elements();
+      const elements = this.stripe.elements();
 
+      // TODO: better understand the "style" object
       // Custom styling can be passed to options when creating an Element.
       // (Note that this demo uses a wider set of styles than the guide below.)
-      var style = {
+      const style = {
         base: {
           color: "#32325d",
           fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
@@ -102,57 +125,22 @@ export default {
       };
 
       // Create an instance of the card Element.
-      var card = elements.create("card", { style: style });
+      this.card = elements.create("card", { style });
 
       // Add an instance of the card Element into the `card-element` <div>.
-      card.mount("#card-element");
+      this.card.mount("#card-element");
 
       // Handle real-time validation errors from the card Element.
-      card.addEventListener("change", function(event) {
-        var displayError = document.getElementById("card-errors");
+      this.card.addEventListener("change", event => {
+        this.errorMessage = "";
         if (event.error) {
-          displayError.textContent = event.error.message;
-        } else {
-          displayError.textContent = "";
+          this.errorMessage = event.error.message;
         }
       });
-
-      // Handle form submission.
-      var form = document.getElementById("payment-form");
-      form.addEventListener("submit", function(event) {
-        event.preventDefault();
-        stripe.createToken(card).then(function(result) {
-          if (result.error) {
-            // Inform the user if there was an error.
-            var errorElement = document.getElementById("card-errors");
-            errorElement.textContent = result.error.message;
-          } else {
-            // Send the token to your server.
-            stripeTokenHandler(result.token);
-          }
-        });
-      });
-
-      // Submit the form with the token ID.
-      function stripeTokenHandler(token) {
-        console.log({ token });
-        // Insert the token ID into the form so it gets submitted to the server
-        var form = document.getElementById("payment-form");
-        var hiddenInput = document.createElement("input");
-        hiddenInput.setAttribute("type", "hidden");
-        hiddenInput.setAttribute("name", "stripeToken");
-        hiddenInput.setAttribute("value", token.id);
-        form.appendChild(hiddenInput);
-
-        // Submit the form
-        form.submit();
-      }
-
-      this.stripeInitialized = true;
     }
   },
   computed: {
-    ...mapState(["cart"]),
+    ...mapState(["cart", "processingPayment"]),
     ...mapGetters(["cartTotal", "itemizedCart"])
   }
 };
@@ -170,6 +158,7 @@ export default {
       svg {
         margin-right: 10px;
         cursor: pointer;
+        color: red;
       }
       width: 40%;
     }
@@ -187,39 +176,27 @@ export default {
   }
 
   button {
-    color: #fff;
-    background-color: cornflowerblue;
-    border: none;
-    outline: none;
-    text-transform: uppercase;
-    padding: 8px 10px;
-    font-weight: 700;
-    width: 50%;
-    cursor: pointer;
-    font-size: 0.9em;
-    margin: 50px auto;
-    display: block;
-    &:hover {
-      background-color: darken(#6495ec, 10%);
-    }
-    &.keep-shopping {
+    &.accent {
       width: 200px;
-      background: red;
       margin-right: 10px;
-      &:hover {
-        background-color: darken(red, 10%);
+      @media (max-width: 414px) {
+        width: 40%;
       }
     }
   }
 
   .action-options {
     display: flex;
+    justify-content: center;
   }
 
-  // STRIPE
+  // STRIPE Elements
   .payment-form {
     width: 50%;
     margin: 0 auto;
+    @media (max-width: 414px) {
+      width: 100%;
+    }
     label {
       font-weight: 700;
       text-transform: uppercase;
@@ -238,11 +215,11 @@ export default {
     }
     .StripeElement--invalid {
       border-color: #fa755a;
-      #card-errors {
-        color: red;
-        font-weight: 500;
-        text-align: center;
-      }
+    }
+    #card-errors {
+      color: red;
+      font-weight: 500;
+      text-align: center;
     }
     button {
       margin: 18px auto 0;
