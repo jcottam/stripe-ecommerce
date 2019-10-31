@@ -1,20 +1,43 @@
 <template>
   <div class="confirmation">
-    <h1>Confirmation</h1>
-    <h3>Amount: {{chargeResult.amount}}</h3>
-    <h3>ID: {{chargeResult.id}}</h3>
-    <!-- <p>{{chargeResult}}</p> -->
-    <p>{{itemizedCart}}</p>
-    <!-- <p>is processing: {{processingPayment}}</p> -->
+    <h1>{{message}}</h1>
+    <div v-if="chargeResult && chargeResult.status === 'success'">
+      <h3>Amount: {{formatDollar(chargeResult.amount)}}</h3>
+      <h3>
+        Receipt:
+        <a :href="chargeResult.receipt_url" target="_blank">{{chargeResult.id}}</a>
+      </h3>
+      <button @click="$router.push({path:'/'})">Return Home</button>
+    </div>
+
+    <div v-if="chargeResult && chargeResult.status === 'error'">
+      <button @click="$router.go(-1)">Try Again</button>
+    </div>
+
+    <!--
+    <p>Outcome: {{chargeResult.outcome}}</p>
+    <p>{{chargeResult}}</p>-->
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 export default {
+  mounted() {
+    if (!this.chargeAttempted) {
+      this.$router.push({ path: "/" });
+    }
+  },
   computed: {
-    ...mapState(["cart", "processingPayment", "chargeResult"]),
-    ...mapGetters(["cartTotal", "itemizedCart"])
+    ...mapState(["chargeResult", "chargeAttempted"]),
+    message() {
+      if (this.chargeResult.status === "success") {
+        return "Thank You For Your Purchase";
+      } else if (this.chargeResult.status === "error") {
+        return "Payment Failed to Process";
+      }
+      return "Processing payment...";
+    }
   }
 };
 </script>

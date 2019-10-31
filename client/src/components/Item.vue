@@ -22,9 +22,6 @@ export default {
     addToCart() {
       const { name, description, image, price } = this;
       this.$store.commit("addToCart", { name, description, image, price });
-    },
-    formatDollar(amount) {
-      return "$" + (amount / 100).toFixed(2);
     }
   }
 };

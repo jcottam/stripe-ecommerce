@@ -12,16 +12,14 @@ const postPayment = async (event, context) => {
     const body = JSON.parse(event.body);
     console.log(body);
     console.log("---------------------------");
-
-    // Get the payment token ID submitted by the form:
-    // Token (source) is created using Checkout or Elements!
-    const { amount, currency, description, source } = body;
-
+    // token (source) is created using Checkout or Elements (client)
+    const { amount, currency, description, metadata, source } = body;
     const charge = await stripe.charges.create({
       amount,
       currency,
       description,
-      source
+      source,
+      metadata
     });
     console.log({ id: charge.id, amount: charge.amount });
 
@@ -34,6 +32,7 @@ const postPayment = async (event, context) => {
       body: JSON.stringify(charge)
     };
   } catch (err) {
+    console.error(err);
     return {
       statusCode: err.statusCode,
       headers: {

@@ -61,7 +61,14 @@ export default {
     this.initializeStripe();
   },
   activated() {
+    // Add an instance of the card Element into the `card-element` <div>.
+    if (this.card) this.card.mount("#card-element");
+    this.$store.commit("chargeResult", {});
+    this.$store.commit("chargeAttempted", false);
     this.showStripe = false;
+  },
+  deactivated() {
+    if (this.card) this.card.unmount();
   },
   methods: {
     checkout() {
@@ -74,14 +81,12 @@ export default {
       if (!this.itemizedCart[item]) return 0;
       return this.itemizedCart[item][0].price * this.itemizedCart[item].length;
     },
-    formatDollar(amount) {
-      return "$" + (amount / 100).toFixed(2);
-    },
     remove(item) {
       this.$store.commit("removeFromCart", item);
     },
     async submitToStripe(evt) {
       evt.preventDefault();
+      // https://stripe.com/docs/stripe-js/reference#stripe-create-token
       const result = await this.stripe.createToken(this.card);
       if (result.error) {
         const errorElement = document.getElementById("card-errors");
@@ -103,11 +108,8 @@ export default {
       this.stripe = Stripe(process.env.VUE_APP_STRIPE_API_KEY);
 
       // Create an instance of Elements.
+      // https://stripe.com/docs/stripe-js/reference#elements-create
       const elements = this.stripe.elements();
-
-      // TODO: better understand the "style" object
-      // Custom styling can be passed to options when creating an Element.
-      // (Note that this demo uses a wider set of styles than the guide below.)
       const style = {
         base: {
           color: "#32325d",
@@ -127,9 +129,6 @@ export default {
       // Create an instance of the card Element.
       this.card = elements.create("card", { style });
 
-      // Add an instance of the card Element into the `card-element` <div>.
-      this.card.mount("#card-element");
-
       // Handle real-time validation errors from the card Element.
       this.card.addEventListener("change", event => {
         this.errorMessage = "";
@@ -140,7 +139,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["cart", "processingPayment"]),
+    ...mapState(["cart"]),
     ...mapGetters(["cartTotal", "itemizedCart"])
   }
 };
@@ -149,7 +148,6 @@ export default {
 <style lang="scss">
 .cart {
   .item {
-    margin-left: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -159,6 +157,9 @@ export default {
         margin-right: 10px;
         cursor: pointer;
         color: red;
+        @media (max-width: 414px) {
+          margin-right: 5px;
+        }
       }
       width: 40%;
     }
@@ -177,7 +178,7 @@ export default {
 
   button {
     &.accent {
-      width: 200px;
+      width: 40%;
       margin-right: 10px;
       @media (max-width: 414px) {
         width: 40%;
