@@ -2,49 +2,49 @@
   {
     "name": "Bike Stanley Park",
     "description": "Vancouver, Canada",
-    "image": "images/beanie.jpg",
+    "image": "https://res.cloudinary.com/tapioca/image/upload/c_scale,e_sharpen:50,w_500/jrc/beanie/beanie.jpg",
     "price": 19995
   },
   {
     "name": "Street Art Tour",
     "description": "Asheville, North Carolina",
-    "image": "images/IMG_0307.jpg",
+    "image": "https://res.cloudinary.com/tapioca/image/upload/c_scale,e_sharpen:50,w_500/jrc/beanie/IMG_0307.jpg",
     "price": 4595
   },
   {
     "name": "Elephant Ride",
     "description": "Destin, Florida",
-    "image": "images/IMG_6085.jpg",
+    "image": "https://res.cloudinary.com/tapioca/image/upload/c_scale,e_sharpen:50,w_500/jrc/beanie/IMG_6085.jpg",
     "price": 1500
   },
   {
     "name": "Snowshoeing",
     "description": "Vail, Colorado",
-    "image": "images/IMG_4521.jpg",
+    "image": "https://res.cloudinary.com/tapioca/image/upload/c_scale,e_sharpen:50,w_500/jrc/beanie/IMG_4521.jpg",
     "price": 7500
   },
   {
     "name": "Bird Watching",
     "description": "Atlanta, Georgia",
-    "image": "images/IMG_9280.jpg",
+    "image": "https://res.cloudinary.com/tapioca/image/upload/c_scale,e_sharpen:50,w_500/jrc/beanie/IMG_9280.jpg",
     "price": 500
   },
   {
     "name": "Sunrise Hike",
     "description": "Bar Harbor, Maine",
-    "image": "images/IMG_0837.jpg",
+    "image": "https://res.cloudinary.com/tapioca/image/upload/c_scale,e_sharpen:50,w_500/jrc/beanie/IMG_0837.jpg",
     "price": 1200
   },
   {
     "name": "Fine Dining",
     "description": "Telluride, Colorado",
-    "image": "images/fine-dining.jpg",
+    "image": "https://res.cloudinary.com/tapioca/image/upload/c_scale,e_sharpen:50,w_500/jrc/beanie/fine-dining.jpg",
     "price": 25000
   },
   {
     "name": "Rock Climbing",
     "description": "Acadia National Park, Maine",
-    "image": "images/rock-climbing.jpg",
+    "image": "https://res.cloudinary.com/tapioca/image/upload/c_scale,e_sharpen:50,w_500/jrc/beanie/rock-climbing.jpg",
     "price": 5500
   }
 ]

@@ -10,14 +10,15 @@ const postPayment = async (event, context) => {
   try {
     await auth.checkAuthBearer(event.headers.Authorization);
     const body = JSON.parse(event.body);
-    console.log(body);
-    console.log("---------------------------");
+    console.log("\npostPayment", body);
     // token (source) is created using Checkout or Elements (client)
     const { amount, currency, description, metadata, source } = body;
+    // https://stripe.com/docs/api/charges/create
     const charge = await stripe.charges.create({
       amount,
       currency,
       description,
+      statement_descriptor: "Adventures w Beanie",
       source,
       metadata
     });
