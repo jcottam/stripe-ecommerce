@@ -1,5 +1,9 @@
 # server
 
+## Create ENV vars file (.env)
+
+- Configure variables to what's outlined in `.env.sample`
+
 ## Project setup
 
 ```

@@ -33,7 +33,7 @@ export default new Vuex.Store({
           payload,
           {
             headers: {
-              Authorization: `Bearer ${process.env.VUE_APP_SERVERLESS_TOKEN}`
+              Authorization: `Bearer ${process.env.VUE_APP_AUTHORIZATION_TOKEN}`
             }
           }
         );

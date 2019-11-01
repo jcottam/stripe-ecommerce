@@ -1,5 +1,9 @@
 # client
 
+## Create ENV vars file (.env)
+
+- Configure variables to what's outlined in `.env.sample`
+
 ## Project setup
 
 ```
@@ -24,6 +28,4 @@ yarn build
 yarn lint
 ```
 
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See [Configuration Reference](https://cli.vuejs.org/config/) for more options.

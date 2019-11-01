@@ -105,7 +105,7 @@ export default {
       console.log("%c-- initialize Stripe", "color:blue;");
       // Create a Stripe client.
       // eslint-disable-next-line
-      this.stripe = Stripe(process.env.VUE_APP_STRIPE_API_KEY);
+      this.stripe = Stripe(process.env.VUE_APP_STRIPE_PUBLISHABLE_KEY);
 
       // Create an instance of Elements.
       // https://stripe.com/docs/stripe-js/reference#elements-create
