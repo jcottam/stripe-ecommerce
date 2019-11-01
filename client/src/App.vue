@@ -39,20 +39,13 @@ export default {
   },
   watch: {
     cart() {
-      // pulsate item count in shopping cart
-      const el = document.querySelector(".cart-count");
+      // animate shopping cart when item is added or removed from cart
+      const el = document.querySelector(".cart-link");
       if (!el) return;
-      if (el.classList.contains("active")) {
+      el.classList.add("active");
+      setTimeout(() => {
         el.classList.remove("active");
-        setTimeout(() => {
-          el.classList.add("active");
-        }, 200);
-      } else {
-        el.classList.add("active");
-        setTimeout(() => {
-          el.classList.remove("active");
-        }, 200);
-      }
+      }, 500);
     }
   }
 };
@@ -100,6 +93,9 @@ header {
     }
     &.cart-link {
       position: relative;
+      &.active {
+        animation: pulse 0.5s 1;
+      }
     }
     .cart-icon {
       font-size: 27px;
@@ -129,19 +125,13 @@ header {
       position: absolute;
       top: -9px;
       left: -28px;
-      &.active {
-        animation: pulse 0.5s 1;
-      }
     }
   }
 }
 
 @keyframes pulse {
   0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.4);
+    transform: scale(0.7);
   }
   100% {
     transform: scale(1);
