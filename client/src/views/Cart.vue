@@ -147,6 +147,13 @@ export default {
 
 <style lang="scss">
 .cart {
+  padding: 30px 30px 20px;
+  @media (max-width: 414px) {
+    padding: 10px 5px 20px;
+  }
+  h1 {
+    margin-top: 0;
+  }
   .item {
     display: flex;
     align-items: center;

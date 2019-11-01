@@ -15,10 +15,6 @@
       <h3 v-if="chargeResult.decline_code">Decline Code: {{chargeResult.decline_code}}</h3>
       <button @click="$router.go(-1)">Try Again</button>
     </div>
-
-    <!--
-    <p>Outcome: {{chargeResult.outcome}}</p>
-    <p>{{chargeResult}}</p>-->
   </div>
 </template>
 
@@ -43,3 +39,15 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.confirmation {
+  padding: 30px 30px 20px;
+  @media (max-width: 414px) {
+    padding: 10px 5px 20px;
+  }
+  h1 {
+    margin-top: 0;
+  }
+}
+</style>

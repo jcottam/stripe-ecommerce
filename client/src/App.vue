@@ -5,7 +5,7 @@
         <router-link to="/">
           <h1>Adventure with Beanie</h1>
         </router-link>
-        <router-link to="/cart" class="cart">
+        <router-link to="/cart" class="cart-link">
           <font-awesome-icon class="cart-icon" icon="shopping-cart" />
           <label>Cart</label>
           <span v-if="cart.length" class="cart-count active">{{cart.length}}</span>
@@ -98,7 +98,7 @@ header {
     &:hover {
       opacity: 0.6;
     }
-    &.cart {
+    &.cart-link {
       position: relative;
     }
     .cart-icon {

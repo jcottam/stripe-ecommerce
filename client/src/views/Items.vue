@@ -25,7 +25,7 @@ export default {
 
 <style lang="scss">
 .items {
-  margin-top: 36px;
+  padding: 30px 30px 20px;
 
   a.checkout {
     text-decoration: none;
