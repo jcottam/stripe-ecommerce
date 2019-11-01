@@ -1,4 +1,4 @@
-# Stripe E-commerce Application
+# Stripe E-Commerce Application
 
 https://stripe.johnryancottam.com/
 
