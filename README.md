@@ -15,9 +15,9 @@ _Adventure with Beanie_ is a single page application (SPA) built atop [Vue.js](h
 
 ## How did I approach the problem?
 
-I first reviewed the [Quickstart docs](https://stripe.com/docs/development) and familiarized myself with the requirements to get up and running with Stripe. I then registered for a Stripe account to obtain API keys for testing. Once registered, I created a new repository on GitHub with a `client` and a `server` directory. I focused on the client (front-end) first. I developed the front-end using [Vue](https://vuejs.org/) with the help of [Vue CLI tooling](https://cli.vuejs.org/). Once I had a “hello world” front-end application running locally, I switched over to the back-end to do the same. I developed the back-end as an [AWS Lambda](https://aws.amazon.com/lambda/) with the help of the [Serverless framework](https://serverless.com/). Once I was successful running the Lambda locally, testing with a GET request, I switched to design.
+I first reviewed the [Quickstart docs](https://stripe.com/docs/development) and familiarized myself with the requirements to get up and running with Stripe. I then registered for a Stripe account to obtain API keys for testing. Once registered, I created a new repository on GitHub with a _client_ and a _server_ directory. I focused on the client (front-end) first. I developed the front-end using [Vue](https://vuejs.org/) with the help of [Vue CLI tooling](https://cli.vuejs.org/). Once I had a “hello world” front-end application running locally, I switched over to the back-end to do the same. I developed the back-end as an [AWS Lambda](https://aws.amazon.com/lambda/) with the help of the [Serverless framework](https://serverless.com/). Once I was successful running the Lambda locally, testing with a GET request, I switched to design.
 
-I designed the content, layout, and user flow of the application on pen and paper. I browsed a few e-commerce experiences online for design ideas, both mobile and desktop. I concluded on designing a responsive layout that would function across mobile and desktop devices. Once design and flow were defined on paper, I went back into the front-end code and developed the views and components to support my wireframes.
+I designed the content, layout, and user flow of the application on pen and paper. I browsed a few e-commerce experiences for design ideas, both mobile and desktop. I decided on a responsive layout that would function across mobile and desktop devices. Once design and flow were defined on paper, I went back into the front-end code and developed the views and components to support my wireframes.
 
 Once the UI was in a comfortable state, I integrated [Stripe.js](https://stripe.com/docs/web/setup) and [Elements UI Library](https://stripe.com/payments/elements) within the checkout view. Stripe.js is primarily responsible for securely transmitting a customer’s payment information to Stripe in exchange for a _token_.
 
@@ -39,7 +39,7 @@ I enjoyed building this application and would like to extend it by adding the fo
 
 - a view to capture customer billing address and email
 - an ability to send an email confirmation to customer
-- the ability to persist shopping cart to localStorage to protect cart in low-bandwidth and accidental browser-refresh scenarios
+- the ability to persist shopping cart to _localStorage_ to protect cart in low-bandwidth and accidental browser-refresh scenarios
 - the ability to save customer card information for expedited future checkouts via the [Stripe Customer API](https://stripe.com/docs/saving-cards)
 - the ability to pass along internal order number, via _metadata_, to Stripe for easy reconciliation
 - integrate the ability to pay with Apple Pay, [Payment Request Button](https://stripe.com/docs/stripe-js/elements/payment-request-button#payment-request-button-element)
