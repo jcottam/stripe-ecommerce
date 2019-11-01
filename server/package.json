@@ -1,7 +1,7 @@
 {
   "name": "stripe-ecommerce-serverless",
   "version": "1.0.0",
-  "description": "serverless functions to process e-commerce transactions with Stripe",
+  "description": "serverless function to process e-commerce payments with Stripe",
   "scripts": {
     "dev": "serverless offline --useSeparateProcesses",
     "deploy": "serverless deploy --aws-profile jcottam-serverless"
@@ -9,7 +9,6 @@
   "author": "John Ryan Cottam",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.0",
     "stripe": "^7.10.0"
   },
   "devDependencies": {

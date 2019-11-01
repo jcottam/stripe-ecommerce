@@ -11,6 +11,8 @@
     </div>
 
     <div v-if="chargeResult && chargeResult.status === 'error'">
+      <h3 v-if="chargeResult.code">Code: {{chargeResult.code}}</h3>
+      <h3 v-if="chargeResult.decline_code">Decline Code: {{chargeResult.decline_code}}</h3>
       <button @click="$router.go(-1)">Try Again</button>
     </div>
 

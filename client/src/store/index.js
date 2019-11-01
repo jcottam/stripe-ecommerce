@@ -41,8 +41,9 @@ export default new Vuex.Store({
         // empty cart
         state.cart = [];
       } catch (error) {
-        console.error(error);
-        commit("chargeResult", { ...error, status: "error" });
+        const data = error.response ? error.response.data : error;
+        console.error(data);
+        commit("chargeResult", { ...data, status: "error" });
       }
     }
   },

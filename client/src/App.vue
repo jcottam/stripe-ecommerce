@@ -138,14 +138,13 @@ header {
 
 @keyframes pulse {
   0% {
-    background-color: yellow;
+    transform: scale(1);
   }
   50% {
-    transform: scale(1.2);
-    background-color: cornflowerblue;
+    transform: scale(1.4);
   }
   100% {
-    background-color: cornflowerblue;
+    transform: scale(1);
   }
 }
 
