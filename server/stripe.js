@@ -6,20 +6,18 @@ const auth = require("./auth");
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const postPayment = async (event, context) => {
+const createCharge = async (event, context) => {
   try {
     await auth.checkAuthBearer(event.headers.Authorization);
     const body = JSON.parse(event.body);
-    console.log("\npostPayment", body);
-    // token (source) is created using Checkout or Elements (client)
     const { amount, currency, description, metadata, source } = body;
     // https://stripe.com/docs/api/charges/create
     const charge = await stripe.charges.create({
       amount,
       currency,
       description,
-      statement_descriptor: "Adventures w Beanie",
-      source,
+      statement_descriptor: "Adventure with Beanie",
+      source, //Token originating from client via Stripe.js & Stripe Elements
       metadata
     });
     console.log({ id: charge.id, amount: charge.amount });
@@ -46,5 +44,5 @@ const postPayment = async (event, context) => {
 };
 
 module.exports = {
-  postPayment
+  createCharge
 };

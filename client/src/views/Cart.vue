@@ -6,32 +6,51 @@
     </p>
 
     <div v-show="cart.length" class="cart-details">
-      <div class="item" v-for="(item,index) in Object.keys(itemizedCart)" :key="`item-${index}`">
+      <div
+        class="item"
+        v-for="(item, index) in Object.keys(itemizedCart)"
+        :key="`item-${index}`"
+      >
         <b>
           <font-awesome-icon icon="times" @click="remove(item)" />
-          ({{itemizedCart[item].length}}) {{ item }}
+          ({{ itemizedCart[item].length }}) {{ item }}
         </b>
-        <span class="item-price">{{formatDollar(itemizedCart[item][0].price)}}</span>
-        <span class="extended-price">{{formatDollar(itemTotal(item))}}</span>
+        <span class="item-price">{{
+          formatDollar(itemizedCart[item][0].price)
+        }}</span>
+        <span class="extended-price">{{ formatDollar(itemTotal(item)) }}</span>
       </div>
 
-      <h3 class="total" v-if="cart.length">Total: {{formatDollar(cartTotal)}}</h3>
+      <h3 class="total" v-if="cart.length">
+        Total: {{ formatDollar(cartTotal) }}
+      </h3>
 
       <div v-show="!showStripe" class="action-options">
-        <button class="accent keep-shopping" @click="$router.push({ path: '/' })">Keep Shopping</button>
+        <button
+          class="accent keep-shopping"
+          @click="$router.push({ path: '/' })"
+        >
+          Keep Shopping
+        </button>
         <button @click="checkout">Checkout</button>
       </div>
 
-      <form v-show="showStripe" class="payment-form animated fadeInUp" @submit="submitToStripe">
+      <form
+        v-show="showStripe"
+        class="payment-form animated fadeInUp"
+        @submit="stripeRequestToken"
+      >
         <div class="form-row">
           <label for="card-element">Credit or debit card</label>
           <div id="card-element">
             <!-- Stripe Element will be inserted here. -->
           </div>
-          <div id="card-errors" role="alert">{{errorMessage}}</div>
+          <div id="card-errors" role="alert">{{ errorMessage }}</div>
         </div>
         <div class="action-options">
-          <button type="button" class="accent" @click="cancelCheckout">Cancel</button>
+          <button type="button" class="accent" @click="cancelCheckout">
+            Cancel
+          </button>
           <button type="submit">Submit Payment</button>
         </div>
         <div class="test-cc">
@@ -43,7 +62,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import { mapState, mapGetters } from "vuex";
@@ -84,26 +102,10 @@ export default {
     remove(item) {
       this.$store.commit("removeFromCart", item);
     },
-    async submitToStripe(evt) {
-      evt.preventDefault();
-      // https://stripe.com/docs/stripe-js/reference#stripe-create-token
-      const result = await this.stripe.createToken(this.card);
-      if (result.error) {
-        const errorElement = document.getElementById("card-errors");
-        errorElement.textContent = result.error.message;
-      } else {
-        this.$router.push({ path: "/confirmation" });
-        this.$store.dispatch("postPaymentToStripe", {
-          source: result.token.id,
-          amount: this.cartTotal,
-          description: "Adventure with Beanie",
-          currency: "usd"
-        });
-      }
-    },
     initializeStripe() {
       console.log("%c-- initialize Stripe", "color:blue;");
       // Create a Stripe client.
+      // When you’re ready to accept live payments, replace the test key with your live key in production.
       // eslint-disable-next-line
       this.stripe = Stripe(process.env.VUE_APP_STRIPE_PUBLISHABLE_KEY);
 
@@ -115,10 +117,7 @@ export default {
           color: "#32325d",
           fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
           fontSmoothing: "antialiased",
-          fontSize: "16px",
-          "::placeholder": {
-            color: "#aab7c4"
-          }
+          fontSize: "16px"
         },
         invalid: {
           color: "#fa755a",
@@ -136,6 +135,23 @@ export default {
           this.errorMessage = event.error.message;
         }
       });
+    },
+    async stripeRequestToken(evt) {
+      evt.preventDefault();
+      // https://stripe.com/docs/stripe-js/reference#stripe-create-token
+      const result = await this.stripe.createToken(this.card);
+      if (result.error) {
+        const errorElement = document.getElementById("card-errors");
+        errorElement.textContent = result.error.message;
+      } else {
+        this.$router.push({ path: "/confirmation" });
+        this.$store.dispatch("postPaymentToStripe", {
+          source: result.token.id,
+          amount: this.cartTotal,
+          description: "Adventure with Beanie",
+          currency: "usd"
+        });
+      }
     }
   },
   computed: {

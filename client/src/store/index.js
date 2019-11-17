@@ -29,7 +29,7 @@ export default new Vuex.Store({
       try {
         commit("chargeAttempted", true);
         const chargeResult = await axios.post(
-          `${process.env.VUE_APP_SERVERLESS_ENDPOINT}/stripe/post-payment`,
+          `${process.env.VUE_APP_SERVERLESS_ENDPOINT}/stripe/create-charge`,
           payload,
           {
             headers: {
