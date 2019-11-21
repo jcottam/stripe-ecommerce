@@ -6,6 +6,23 @@ const auth = require("./auth");
 // See your keys here: https://dashboard.stripe.com/account/apikeys
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+const getCharges = async (event, context) => {
+  try {
+    const result = await stripe.charges.list({ limit: 100 });
+    return {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "text/json",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(result)
+    };
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 const createCharge = async (event, context) => {
   try {
     await auth.checkAuthBearer(event.headers.Authorization);
@@ -44,5 +61,6 @@ const createCharge = async (event, context) => {
 };
 
 module.exports = {
-  createCharge
+  createCharge,
+  getCharges
 };

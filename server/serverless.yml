@@ -18,3 +18,11 @@ functions:
           path: stripe/create-charge
           method: post
           cors: true
+
+  getCharges:
+    handler: stripe.getCharges
+    events:
+      - http:
+          path: stripe/charges
+          method: get
+          cors: true

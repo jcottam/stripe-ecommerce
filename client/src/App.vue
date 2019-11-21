@@ -5,11 +5,18 @@
         <router-link to="/">
           <h1>Adventure with Beanie</h1>
         </router-link>
-        <router-link to="/cart" class="cart-link">
-          <font-awesome-icon class="cart-icon" icon="shopping-cart" />
-          <label>Cart</label>
-          <span v-if="cart.length" class="cart-count active">{{cart.length}}</span>
-        </router-link>
+        <div>
+          <router-link to="/charges" class="charges"
+            ><label>Charges</label>
+          </router-link>
+          <router-link to="/cart" class="cart-link">
+            <font-awesome-icon class="cart-icon" icon="shopping-cart" />
+            <label>Cart</label>
+            <span v-if="cart.length" class="cart-count active">{{
+              cart.length
+            }}</span>
+          </router-link>
+        </div>
       </div>
     </header>
 
@@ -87,7 +94,7 @@ header {
   a {
     text-decoration: none;
     color: #eee;
-    display: block;
+    // display: block;
     &:hover {
       opacity: 0.6;
     }
@@ -95,6 +102,12 @@ header {
       position: relative;
       &.active {
         animation: pulse 0.5s 1;
+      }
+    }
+    &.charges {
+      margin-right: 20px;
+      @media (max-width: 414px) {
+        display: none;
       }
     }
     .cart-icon {
@@ -159,4 +172,3 @@ footer {
   }
 }
 </style>
-
