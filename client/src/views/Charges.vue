@@ -4,7 +4,7 @@
     <p v-if="!charges.data">Fetching from Stripe...</p>
     <ol v-else>
       <li v-for="charge in charges.data" :key="charge.id">
-        {{ charge.id }} | ${{ Number(charge.amount / 1000).toFixed(2) }}
+        {{ charge.id }} | ${{ Number(charge.amount / 100).toFixed(2) }}
       </li>
     </ol>
   </div>
