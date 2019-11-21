@@ -105,7 +105,7 @@ header {
       }
     }
     &.charges {
-      margin-right: 20px;
+      margin-right: 45px;
       @media (max-width: 414px) {
         display: none;
       }
