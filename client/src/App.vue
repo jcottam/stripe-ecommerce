@@ -6,9 +6,9 @@
           <h1>Adventure with Beanie</h1>
         </router-link>
         <div>
-          <router-link to="/charges" class="charges"
+          <!-- <router-link to="/charges" class="charges"
             ><label>Charges</label>
-          </router-link>
+          </router-link> -->
           <router-link to="/cart" class="cart-link">
             <font-awesome-icon class="cart-icon" icon="shopping-cart" />
             <label>Cart</label>
