@@ -10,7 +10,7 @@ _Adventure with Beanie_ is a single page application (SPA) built atop [Vue.js](h
 
 **The application utilizes 2 Stripe APIs and a UI component library:**
 
-- **Client-side APIs:** Stripe web client , [Stripe.js](https://stripe.com/docs/web/setup), in combination with UI library, [Stripe Elements](https://stripe.com/payments/elements).
+- **Client-side APIs:** Stripe web client, [Stripe.js](https://stripe.com/docs/web/setup), in combination with UI library, [Stripe Elements](https://stripe.com/payments/elements).
 - **Server-side APIs:** Stripe [Node.js library](https://stripe.com/docs/libraries#node)
 
 ## How did I approach the problem?
@@ -37,9 +37,9 @@ I went the serverless approach with the back-end because it’s lightweight, fle
 
 I enjoyed building this application and would like to extend it by adding the following functionality:
 
-- a view to capture customer billing address and email
-- an ability to send an email confirmation to customer
-- the ability to persist shopping cart to _localStorage_ to protect cart in low-bandwidth and accidental browser-refresh scenarios
-- the ability to save customer card information for expedited future checkouts via the [Stripe Customer API](https://stripe.com/docs/saving-cards)
-- the ability to pass along internal order number, via _metadata_, to Stripe for easy reconciliation
+- capture customer billing address and email
+- send an email confirmation to customer
+- persist shopping cart to _localStorage_ to protect cart in low-bandwidth and accidental browser-refresh scenarios
+- save customer card information for expedited future checkouts via the [Stripe Customer API](https://stripe.com/docs/saving-cards)
+- pass along internal order number, via _metadata_, to Stripe for easy reconciliation
 - integrate the ability to pay with Apple Pay, [Payment Request Button](https://stripe.com/docs/stripe-js/elements/payment-request-button#payment-request-button-element)
