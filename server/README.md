@@ -2,7 +2,12 @@
 
 ## Create ENV vars file (.env)
 
-- Configure variables to what's outlined in `.env.sample`
+- Configure variables as follows (or set via deployment env):
+
+```
+STRIPE_SECRET_KEY=
+AUTHORIZATION_TOKEN=
+```
 
 ## Project setup
 

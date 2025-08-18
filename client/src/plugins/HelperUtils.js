@@ -1,8 +1,14 @@
 const HelperUtils = {
   install: function(Vue) {
+    const currencyFormatter = new Intl.NumberFormat(undefined, {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2
+    });
+
     Vue.prototype.formatDollar = function(amount) {
-      if (typeof amount !== "number") return "";
-      return "$" + (amount / 100).toFixed(2);
+      if (typeof amount !== "number" || Number.isNaN(amount)) return "";
+      return currencyFormatter.format(amount / 100);
     };
   }
 };

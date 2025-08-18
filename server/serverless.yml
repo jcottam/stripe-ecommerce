@@ -4,7 +4,11 @@ org: jcottam
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs18.x
+  region: us-east-1
+  environment:
+    STRIPE_SECRET_KEY: ${env:STRIPE_SECRET_KEY}
+    AUTHORIZATION_TOKEN: ${env:AUTHORIZATION_TOKEN}
 
 plugins:
   - serverless-dotenv-plugin

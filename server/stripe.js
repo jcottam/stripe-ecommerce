@@ -8,24 +8,38 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const getCharges = async (event, context) => {
   try {
+    const headers = event.headers || {};
+    const authHeader = headers.Authorization || headers.authorization;
+    await auth.checkAuthBearer(authHeader);
     const result = await stripe.charges.list({ limit: 100 });
     return {
       statusCode: 200,
       headers: {
-        "Content-Type": "text/json",
-        "Access-Control-Allow-Origin": "*"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type,Authorization"
       },
       body: JSON.stringify(result)
     };
   } catch (error) {
     console.error(error);
-    throw error;
+    return {
+      statusCode: error.statusCode || 500,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type,Authorization"
+      },
+      body: JSON.stringify({ message: error.message || "Internal Server Error" })
+    };
   }
 };
 
 const createCharge = async (event, context) => {
   try {
-    await auth.checkAuthBearer(event.headers.Authorization);
+    const headers = event.headers || {};
+    const authHeader = headers.Authorization || headers.authorization;
+    await auth.checkAuthBearer(authHeader);
     const body = JSON.parse(event.body);
     const { amount, currency, description, metadata, source } = body;
     // https://stripe.com/docs/api/charges/create
@@ -42,20 +56,24 @@ const createCharge = async (event, context) => {
     return {
       statusCode: 200,
       headers: {
-        "Content-Type": "text/json",
-        "Access-Control-Allow-Origin": "*"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type,Authorization"
       },
       body: JSON.stringify(charge)
     };
   } catch (err) {
     console.error(err);
     return {
-      statusCode: err.statusCode,
+      statusCode: err.statusCode || 500,
       headers: {
-        "Content-Type": "text/json",
-        "Access-Control-Allow-Origin": "*"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type,Authorization"
       },
-      body: JSON.stringify(err.raw)
+      body: JSON.stringify(
+        err.raw || { message: err.message || "Internal Server Error" }
+      )
     };
   }
 };

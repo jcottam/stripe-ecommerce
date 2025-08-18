@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
+import api from "../services/api";
 
 Vue.use(Vuex);
 
@@ -17,6 +17,9 @@ export default new Vuex.Store({
     removeFromCart(state, name) {
       state.cart = state.cart.filter(item => item.name !== name);
     },
+    clearCart(state) {
+      state.cart = [];
+    },
     chargeAttempted(state, value) {
       state.chargeAttempted = value;
     },
@@ -25,21 +28,12 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async postPaymentToStripe({ commit, state }, payload) {
+    async postPaymentToStripe({ commit }, payload) {
       try {
         commit("chargeAttempted", true);
-        const chargeResult = await axios.post(
-          `${process.env.VUE_APP_SERVERLESS_ENDPOINT}/stripe/create-charge`,
-          payload,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.VUE_APP_AUTHORIZATION_TOKEN}`
-            }
-          }
-        );
+        const chargeResult = await api.post("/stripe/create-charge", payload);
         commit("chargeResult", { ...chargeResult.data, status: "success" });
-        // empty cart
-        state.cart = [];
+        commit("clearCart");
       } catch (error) {
         const data = error.response ? error.response.data : error;
         console.error(data);

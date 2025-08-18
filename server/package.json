@@ -4,15 +4,15 @@
   "description": "serverless function to process e-commerce payments with Stripe",
   "scripts": {
     "dev": "serverless offline --useSeparateProcesses",
-    "deploy": "serverless deploy --aws-profile jcottam-serverless"
+    "deploy": "serverless deploy"
   },
   "author": "John Ryan Cottam",
   "license": "MIT",
   "dependencies": {
-    "stripe": "^7.10.0"
+    "stripe": "^14.0.0"
   },
   "devDependencies": {
     "serverless-dotenv-plugin": "^2.1.1",
-    "serverless-offline": "^5.11.0"
+    "serverless-offline": "^13.0.0"
   }
 }

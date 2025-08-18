@@ -8,6 +8,7 @@ import { faStripe } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "@/assets/style.scss";
 import HelperUtils from "./plugins/HelperUtils";
+import "./services/envValidation";
 
 library.add(faStripe, faShoppingCart, faTimes);
 Vue.component("font-awesome-icon", FontAwesomeIcon);

@@ -2,7 +2,13 @@
 
 ## Create ENV vars file (.env)
 
-- Configure variables to what's outlined in `.env.sample`
+- Configure variables using `.env.example` as a template
+
+```
+VUE_APP_STRIPE_PUBLISHABLE_KEY=
+VUE_APP_SERVERLESS_ENDPOINT=
+VUE_APP_AUTHORIZATION_TOKEN=
+```
 
 ## Project setup
 
