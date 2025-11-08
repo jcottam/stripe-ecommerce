@@ -1,8 +1,6 @@
 # Stripe E-Commerce Application
 
-https://stripe.johnryancottam.com/
-
-## Application Overview
+## Overview
 
 _Adventure with Beanie_ is a responsive e-commerce SPA where users can book outdoor adventures led by Beanie the Poodle—an experienced, enthusiastic guide for activities like rock climbing and bird watching.
 
